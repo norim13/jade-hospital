@@ -24,6 +24,7 @@ public class main {
 		} catch(Exception e){System.out.println(e.getStackTrace());}
 		
 		AgentContainer mc = rt.createMainContainer(pf);
+		Library.setMainContainer(mc);
 		try{
 			AgentController ac = mc.createNewAgent("AgentGenerateurPatient", "jadehospital.AgentGenerateurPatient" ,null );
 			ac.start();
