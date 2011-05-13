@@ -21,6 +21,6 @@ try {
 	e.printStackTrace();
 }
 
-ArrayList&lt;AID&gt; listeRetour = new ArrayList<AID>(); 
+ArrayList<AID> listeRetour = new ArrayList<AID>(); 
 for(int i = 0; i < result.length; ++i)		
 	listeRetour.add(result[i].getName());
