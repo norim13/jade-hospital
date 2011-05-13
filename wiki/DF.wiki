@@ -2,7 +2,7 @@
 
 = Introduction =
 
-Pour s'enregistrer auprès du DF, un agent doit suivre la procédure suivante.
+Pour s'enregistrer auprès du DF, un agent doit suivre la procédure suivante dans sa méthode setup()
 
 
 = Details =
