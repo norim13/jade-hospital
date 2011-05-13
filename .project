@@ -14,4 +14,16 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>jade.jar</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/UTC/IA04/jade/jade.jar</locationURI>
+		</link>
+		<link>
+			<name>jena-2.6.2.jar</name>
+			<type>1</type>
+			<locationURI>PARENT-4-PROJECT_LOC/UTC/IA04/libjena/jena-2.6.2.jar</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>
