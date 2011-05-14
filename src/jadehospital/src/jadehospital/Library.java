@@ -45,8 +45,8 @@ public class Library {
 	{
 		DFAgentDescription template = new DFAgentDescription();
 		ServiceDescription sd = new ServiceDescription();
-		sd.setType("Ontologie");
-		sd.setName("KBAgent");
+		sd.setType(type);
+		sd.setName(name);
 		template.addServices(sd);
 				
 		DFAgentDescription[] result = null;

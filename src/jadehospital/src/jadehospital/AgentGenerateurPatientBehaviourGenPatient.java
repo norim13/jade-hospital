@@ -6,6 +6,7 @@ import jade.core.behaviours.TickerBehaviour;
 import jade.core.Runtime;
 import jade.wrapper.AgentContainer;
 import jade.wrapper.AgentController;
+import jade.wrapper.StaleProxyException;
 
 public class AgentGenerateurPatientBehaviourGenPatient extends TickerBehaviour {
 
@@ -21,13 +22,20 @@ public class AgentGenerateurPatientBehaviourGenPatient extends TickerBehaviour {
 	private static final long serialVersionUID = 1L;
 
 	@Override
+	// toutes les 5 secondes génération d'un agent patient
 	protected void onTick() {
 		// TODO Auto-generated method stub
 		AgentContainer agentContainer=Library.getMainContainer();
 		
-		AgentController ac = agentContainer.createNewAgent("Patient","jadehospital.Patient",null);
-		ac.start();
-		
+		AgentController ac;
+		try {
+			ac = agentContainer.createNewAgent("Patient","jadehospital.Patient",null);
+			ac.start();
+			Library.registerInDF("Patient","Patient",(Agent) ac);
+		} catch (StaleProxyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 

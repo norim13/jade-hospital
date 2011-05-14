@@ -1,6 +1,7 @@
 package jadehospital;
 
 import jade.wrapper.AgentContainer;
+import jade.core.Agent;
 import jade.core.Profile;
 import jade.core.ProfileImpl;
 import jade.core.Runtime;
@@ -28,6 +29,7 @@ public class main {
 		try{
 			AgentController ac = mc.createNewAgent("AgentGenerateurPatient", "jadehospital.AgentGenerateurPatient" ,null );
 			ac.start();
+			Library.registerInDF("AgentGenerateurPatient","AgentGenerateurPatient",(Agent) ac);
 			
 		}catch(Exception e){System.out.println("#####\n" + e.getMessage() + "\n#####\n");}
 		System.out.println("fini");
