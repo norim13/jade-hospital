@@ -12,6 +12,10 @@ import jade.wrapper.AgentContainer;
 
 public class Library {
 	
+	public static final String DF_ACCUEIL_TYPE = "hopital";
+	public static final String DF_ACCUEIL_NAME = "accueil";
+	
+	
 	private static AgentContainer mainContainer = null;
 	
 	/**
