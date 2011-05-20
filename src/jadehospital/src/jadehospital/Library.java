@@ -15,6 +15,9 @@ public class Library {
 	public static final String DF_ACCUEIL_TYPE = "hopital";
 	public static final String DF_ACCUEIL_NAME = "accueil";
 	
+	public static final String DF_AGENT_GENERATEUR_PATIENT_TYPE="hopital";
+	public static final String DF_AGENT_GENERATEUR_PATIENT_NAME="gentGenerateurPatient";
+	
 	
 	private static AgentContainer mainContainer = null;
 	

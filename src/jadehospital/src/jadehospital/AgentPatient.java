@@ -6,6 +6,7 @@ import jade.lang.acl.ACLMessage;
 
 public class AgentPatient extends Agent {
 
+	public static int nbPatients = 0;
 	private double etatSante; // pour l'instant c'est un nombre qui indique l'état de santé ; plus tard ça pourra être une structure de données plus complexe (différents symptômes, etc.) 
 	
 	public void setup()

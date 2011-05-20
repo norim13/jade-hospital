@@ -27,9 +27,14 @@ public class main {
 		AgentContainer mc = rt.createMainContainer(pf);
 		Library.setMainContainer(mc);
 		try{
-			AgentController ac = mc.createNewAgent("AgentGenerateurPatient", "jadehospital.AgentGenerateurPatient" ,null );
-			ac.start();
-			Library.registerInDF("AgentGenerateurPatient","AgentGenerateurPatient",(Agent) ac);
+			AgentController agentGenerateurPatient = mc.createNewAgent("AgentGenerateurPatient", "jadehospital.AgentGenerateurPatient" ,null );
+			AgentController agentAccueil=mc.createNewAgent("Accueil","jadehospital.Accueil",null);
+			
+			agentGenerateurPatient.start();
+			agentAccueil.start();
+			
+			Library.registerInDF(Library.DF_AGENT_GENERATEUR_PATIENT_TYPE,Library.DF_AGENT_GENERATEUR_PATIENT_NAME,(Agent)agentGenerateurPatient);
+			Library.registerInDF(Library.DF_ACCUEIL_NAME,Library.DF_ACCUEIL_TYPE,(Agent)agentAccueil);
 			
 		}catch(Exception e){System.out.println("#####\n" + e.getMessage() + "\n#####\n");}
 		System.out.println("fini");
