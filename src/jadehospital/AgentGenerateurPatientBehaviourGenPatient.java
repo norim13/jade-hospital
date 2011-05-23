@@ -31,7 +31,7 @@ public class AgentGenerateurPatientBehaviourGenPatient extends TickerBehaviour {
 		try {
 			ac = agentContainer.createNewAgent(String.format("Patient%d",AgentPatient.nbPatients),"jadehospital.Patient",null);
 			ac.start();
-			Library.registerInDF("Patient","Patient",(Agent) ac);
+			Library.registerInDF("Patient",(Agent) ac);
 		} catch (StaleProxyException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

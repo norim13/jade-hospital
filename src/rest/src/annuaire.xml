@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<annuaire>
+  <medecin>
+    <nom>zohair</nom>
+    <portable>0614769088</portable>
+    <bureau>2121</bureau>
+    <specialite>Anesthesiste</specialite>
+    <arrivee>Lundi 9 mai 2011- 10h00</arrivee>
+    <present>oui</present>
+    <garde>non</garde>
+  </medecin>
+  <medecin>
+    <nom>tanguy</nom>
+    <bureau>3456</bureau>
+    <specialite>ortho</specialite>
+    <arrivee>12/05/2011_13h30</arrivee>
+    <present>oui</present>
+    <garde>non</garde>
+  </medecin>
+  <medecin>
+    <nom>jordan</nom>
+    <bureau>3456</bureau>
+    <specialite>orthopediste</specialite>
+    <arrivee>12/05/2011_13h30</arrivee>
+    <present>oui</present>
+    <garde>non</garde>
+  </medecin>
+</annuaire>
+

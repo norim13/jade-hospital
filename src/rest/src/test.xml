@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<patients>
+  <patient>
+    <nom>john_smith</nom>
+    <symptome>Entorse</symptome>
+    <etat>3</etat>
+  </patient>
+  <patient>
+    <nom>pierre_dupont</nom>
+    <symptome>Grippe</symptome>
+    <etat>4</etat>
+  </patient>
+  <patient>
+    <nom>nicola_durand</nom>
+    <symptome>Appendicite</symptome>
+    <etat>2</etat>
+  </patient>
+  <patient>
+    <nom>jordan</nom>
+    <symptome>mdr</symptome>
+    <etat>5</etat>
+  </patient>
+</patients>
+
