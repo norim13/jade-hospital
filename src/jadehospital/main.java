@@ -1,6 +1,8 @@
 package jadehospital;
 
+import rest.src.ImageMainServer;
 import jade.wrapper.AgentContainer;
+import jade.core.Agent;
 import jade.core.Profile;
 import jade.core.ProfileImpl;
 import jade.core.Runtime;
@@ -24,13 +26,17 @@ public class main {
 		} catch(Exception e){System.out.println(e.getStackTrace());}
 		
 		AgentContainer mc = rt.createMainContainer(pf);
+		Library.setMainContainer(mc);
 		try{
-			AgentController ac = mc.createNewAgent("AgentGenerateurPatient", "jadehospital.AgentGenerateurPatient" ,null );
-			ac.start();
+			AgentController agentGenerateurPatient = mc.createNewAgent("AgentGenerateurPatient", "jadehospital.AgentGenerateurPatient" ,null );
+			AgentController agentAccueil=mc.createNewAgent("Accueil","jadehospital.Accueil",null);
+			
+			agentGenerateurPatient.start();
+			agentAccueil.start();
 			
 		}catch(Exception e){System.out.println("#####\n" + e.getMessage() + "\n#####\n");}
-		System.out.println("fini");
 		
+		ImageMainServer.startServer();
 		
 	}
 
