@@ -22,16 +22,16 @@ public class AgentGenerateurPatientBehaviourGenPatient extends TickerBehaviour {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	// toutes les 5 secondes g�n�ration d'un agent patient
+	// toutes les 5 secondes gŽnŽration d'un agent patient
 	protected void onTick() {
 		// TODO Auto-generated method stub
 		AgentContainer agentContainer=Library.getMainContainer();
 		
 		AgentController ac;
 		try {
-			ac = agentContainer.createNewAgent(String.format("Patient%d",AgentPatient.nbPatients),"jadehospital.Patient",null);
+			ac = agentContainer.createNewAgent(String.format("Patient%d",AgentPatient.nbPatients++),"jadehospital.Patient",null);
 			ac.start();
-			Library.registerInDF("Patient",(Agent) ac);
+			
 		} catch (StaleProxyException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
