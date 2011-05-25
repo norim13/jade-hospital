@@ -10,9 +10,16 @@ public class AccueilBehaviourServirPatient extends CyclicBehaviour {
 	public void action() {
 		// TODO Auto-generated method stub
 		
-		ACLMessage mess = myAgent.receive();
-		if (mess != null) {
-			System.out.println("message recu du patient");
+		ACLMessage msg = myAgent.receive();
+		if(msg != null)
+		{
+			System.out.println("Accueil : j'ai recu un nouveau patient");
+			//((AgentAccueil) myAgent).pseudoREST.add(msg.getSender());
+			
+			System.out.println("### Liste des patients ###");
+			//ListIterator<AID> it = ((AgentAccueil) myAgent).pseudoREST.listIterator();
+			//while(it.hasNext())
+				//System.out.println(it.next());
 		}
 		else{
 			
