@@ -5,10 +5,9 @@ import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 
 public class AccueilBehaviourServirPatient extends CyclicBehaviour {
-
+	
 	@Override
 	public void action() {
-		// TODO Auto-generated method stub
 		
 		ACLMessage msg = myAgent.receive();
 		if(msg != null)
