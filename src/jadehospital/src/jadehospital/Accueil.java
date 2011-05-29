@@ -6,10 +6,10 @@ import jade.core.behaviours.Behaviour;
 
 
 
-public class Accueil extends Agent {
+public class Accueil extends HospitalAgent {
 	
 	public void setup(){
-		
+		Library.registerInDF(Library.DF_ACCUEIL_TYPE, this);
 		this.addBehaviour(new AccueilBehaviourServirPatient());	
 
 	}
