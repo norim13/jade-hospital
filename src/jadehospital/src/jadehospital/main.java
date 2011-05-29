@@ -1,5 +1,6 @@
 package jadehospital;
 
+import rest.ImageMainServer;
 import jade.wrapper.AgentContainer;
 import jade.core.Agent;
 import jade.core.Profile;
@@ -20,6 +21,7 @@ public class main {
 		Runtime rt =Runtime.instance();
 		Profile pf=null;
 		System.out.println("debut");
+		ImageMainServer.startServer();
 		try{
 			pf = new ProfileImpl();
 		} catch(Exception e){System.out.println(e.getStackTrace());}
@@ -27,14 +29,15 @@ public class main {
 		AgentContainer mc = rt.createMainContainer(pf);
 		Library.setMainContainer(mc);
 		try{
-			AgentController agentGenerateurPatient = mc.createNewAgent("AgentGenerateurPatient", "jadehospital.AgentGenerateurPatient" ,null );
-			AgentController agentAccueil=mc.createNewAgent("Accueil","jadehospital.Accueil",null);
+			AgentController agentGenerateurPatient = mc.createNewAgent(Library.DF_AGENT_GENERATEUR_PATIENT_NAME, "jadehospital.AgentGenerateurPatient" ,null );
+			AgentController agentAccueil=mc.createNewAgent(Library.DF_ACCUEIL_NAME,"jadehospital.Accueil",null);
 			
 			agentGenerateurPatient.start();
 			agentAccueil.start();
 			
-			Library.registerInDF(Library.DF_AGENT_GENERATEUR_PATIENT_TYPE,Library.DF_AGENT_GENERATEUR_PATIENT_NAME,(Agent)agentGenerateurPatient);
-			Library.registerInDF(Library.DF_ACCUEIL_NAME,Library.DF_ACCUEIL_TYPE,(Agent)agentAccueil);
+			Library.registerInDF(Library.DF_AGENT_GENERATEUR_PATIENT_TYPE,(Agent)agentGenerateurPatient);
+			Library.registerInDF(Library.DF_ACCUEIL_TYPE,(Agent)agentAccueil);
+			
 			
 		}catch(Exception e){System.out.println("#####\n" + e.getMessage() + "\n#####\n");}
 		System.out.println("fini");
