@@ -8,7 +8,9 @@ public class AgentMedecin extends HospitalAgent {
 	
 	public void setup()
 	{
-		experience = 20; // initialement 20% de chances de soigner le patient quand on l'opère 
+		experience = 20; // initialement 20% de chances de soigner le patient quand on l'opère
+		addBehaviour(new AgentMedecinBhvOperer());
+		addBehaviour(new AgentMedecinBhvExaminer());
 	}
 	
 }

@@ -10,7 +10,6 @@ public class Accueil extends Agent {
 	
 	public void setup(){
 		Library.registerInDF(Library.DF_ACCUEIL_TYPE, this);
-		this.addBehaviour(new AccueilBehaviourServirPatient());	
-
+		this.addBehaviour(new AccueilBehaviourServirPatient());
 	}
 }
