@@ -1,10 +1,14 @@
 package jadehospital;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Random;
 
 
 
-public class EtatSante {
+public class EtatSante implements Serializable {
 
 	/**
 	 * 
@@ -28,6 +32,10 @@ public class EtatSante {
 	public int getEtat() {
 		return etat;
 	}
+	
+	public String etatAsString() {
+		return String.format("%d", etat);
+	}
 
 	public void setEtat(int etat) {
 		this.etat = etat;
@@ -35,6 +43,10 @@ public class EtatSante {
 
 	public symptomeEnum getSymptome() {
 		return symptome;
+	}
+	
+	public String symptomeAsString() {
+		return symptome.toString();
 	}
 
 	public void setSymptome(symptomeEnum symptome) {
@@ -46,7 +58,14 @@ public class EtatSante {
 	    return symptomeEnum.values()[pick];
 	}
 
+	private void readObject(ObjectInputStream aInputStream) throws ClassNotFoundException, IOException {
+		//always perform the default de-serialization first
+		aInputStream.defaultReadObject();
+	}
 
-
+	private void writeObject(ObjectOutputStream aOutputStream) throws IOException {
+		//perform the default serialization for all non-transient, non-static fields
+		aOutputStream.defaultWriteObject();
+	}
 
 }

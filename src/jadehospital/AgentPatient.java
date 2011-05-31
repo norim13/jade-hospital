@@ -1,26 +1,47 @@
 package jadehospital;
 
+import java.io.IOException;
+
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
+
 import jade.core.AID;
 import jade.core.Agent;
 import jade.lang.acl.ACLMessage;
+import jadehospital.EtatSante.symptomeEnum;
 
 public class AgentPatient extends Agent {
 
 	public static int nbPatients = 0;
-	private double etatSante; // pour l'instant c'est un nombre qui indique l'état de santé ; plus tard ça pourra être une structure de données plus complexe (différents symptômes, etc.) 
+	private EtatSante etatSante;
 	
 	public void setup()
 	{
-		etatSante = 0; // 0 = très malade, 1 = guérison terminée
+		addBehaviour(new AgentPatientBhvEtreExamine());
 		
-		System.out.println("salut, je suis un patient");
+		etatSante = new EtatSante(symptomeEnum.MAUX_DE_TETE, 0);
+		
+		Library.registerInDF(Library.DF_AGENT_PATIENT_TYPE, this);
 		
 		// on prévient l'accueil de notre arrivée
 		AID accueil = Library.getFirstReceiver(Library.DF_ACCUEIL_TYPE, Library.DF_ACCUEIL_NAME, this);
 		ACLMessage msgAccueil = new ACLMessage(ACLMessage.INFORM);
-		msgAccueil.setContent(Double.toString(etatSante));
+		
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			msgAccueil.setContent(mapper.writeValueAsString(etatSante));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		msgAccueil.addReceiver(accueil);
 		send(msgAccueil);
+	}
+	
+	public EtatSante getEtatSante()
+	{
+		return etatSante;
 	}
 	
 }

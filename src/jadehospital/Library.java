@@ -18,6 +18,10 @@ public class Library {
 	public static final String DF_AGENT_GENERATEUR_PATIENT_TYPE="hopital";
 	public static final String DF_AGENT_GENERATEUR_PATIENT_NAME="gentGenerateurPatient";
 	
+	public static final String DF_AGENT_MEDECIN_TYPE = "AgentMedecin";
+	
+	public static final String DF_AGENT_PATIENT_TYPE = "AgentPatient";
+	
 	
 	private static AgentContainer mainContainer = null;
 	
@@ -52,10 +56,13 @@ public class Library {
 	{
 		DFAgentDescription template = new DFAgentDescription();
 		ServiceDescription sd = new ServiceDescription();
-		sd.setType(type);
 		
+		if(type != null && ! type.isEmpty())
+			sd.setType(type);
 		
-		sd.setName(name);
+		if(name != null && ! name.isEmpty())
+			sd.setName(name);
+		
 		template.addServices(sd);
 				
 		DFAgentDescription[] result = null;
@@ -91,16 +98,20 @@ public class Library {
 		return receivers.get(0);
 	}
 	
-	public static AID getFirstReceiver(String type, Agent a)
+	public static AID getFirstReceiverByType(String type, Agent a)
 	{
 		return getFirstReceiver(type, "", a);
+	}
+	
+	public static AID getFirstReceiverByName(String name, Agent a)
+	{
+		return getFirstReceiver("", name, a);
 	}
 	
 	/**
 	 * Effectue l'inscription d'un agent auprès du DF
 	 * 
 	 * @param type : champ "type" dans la description de l'agent
-	 * @param name : champ "name" dans la description de l'agent
 	 * @param a : référence sur l'agent qui demande à s'inscrire auprès du DF
 	 */
 	public static void registerInDF(String type, Agent a)

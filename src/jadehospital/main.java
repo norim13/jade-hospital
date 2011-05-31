@@ -25,18 +25,26 @@ public class main {
 			pf = new ProfileImpl();
 		} catch(Exception e){System.out.println(e.getStackTrace());}
 		
-		AgentContainer mc = rt.createMainContainer(pf);
+		AgentContainer mc=null;
+		try {
+			mc = rt.createMainContainer(pf);
+		} catch (Exception e1) {
+			e1.printStackTrace();
+			return;
+		}
 		Library.setMainContainer(mc);
+		ImageMainServer.startServer();
 		try{
 			AgentController agentGenerateurPatient = mc.createNewAgent("AgentGenerateurPatient", "jadehospital.AgentGenerateurPatient" ,null );
 			AgentController agentAccueil=mc.createNewAgent("Accueil","jadehospital.Accueil",null);
+			AgentController agentMedecin = mc.createNewAgent("Medecin", "jadehospital.AgentMedecin", null);
 			
 			agentGenerateurPatient.start();
 			agentAccueil.start();
+			agentMedecin.start();
 			
 		}catch(Exception e){System.out.println("#####\n" + e.getMessage() + "\n#####\n");}
 		
-		ImageMainServer.startServer();
 		
 	}
 

@@ -15,7 +15,7 @@ public class ParserXML {
 	static Element racine;
 	String erreur="";
 	
-	ParserXML(String a) throws JDOMException, IOException{
+	ParserXML(String a) throws JDOMException, IOException, FileNotFoundException {
 		//On cr�e une instance de SAXBuilder
 	    SAXBuilder sxb = new SAXBuilder();
 	      
@@ -25,7 +25,7 @@ public class ParserXML {
 	    	document = sxb.build(new File(a));
 	    }catch (FileNotFoundException e){
 	    	erreur = "notfound";
-	    	return;
+	    	throw(e);
 	    }
 	    
 	    //On initialise un nouvel �l�ment racine avec l'�l�ment racine du document.
