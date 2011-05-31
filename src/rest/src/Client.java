@@ -25,6 +25,11 @@ public class Client {
 	
 	//Client(){};
 	
+	/**
+	 * Retourne la liste de tous les patients
+	 * @return : HashMap de tous les patients ; chaque patient est lui-même représenté par
+	 * un Hashmap<String, String> avec son nom, son symptôme et son état
+	 */
 	public static HashMap<Integer, HashMap<String, String>> getPatient(String url) {
 		URI uri;
 		String s = null;

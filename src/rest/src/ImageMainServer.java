@@ -9,6 +9,10 @@ import org.restlet.data.Protocol;
 
 public class ImageMainServer {
 	
+	private static String BASE_URL = "http://localhost:8182/";
+	
+	public static String baseURL() { return BASE_URL; }
+	
 	public static void main(String[] args) {
 		startServer();
 		Client cl= new Client();
