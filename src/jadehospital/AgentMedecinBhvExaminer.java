@@ -25,7 +25,7 @@ public class AgentMedecinBhvExaminer extends CyclicBehaviour {
 	public void action() {
 		
 		//examiner le REST pour trouver le nom d'un patient à examiner
-		HashMap<String, String> infosPatient = choisirPatient(Client.getPatient(ImageMainServer.baseURL() + "patients/"));
+		HashMap<String, String> infosPatient = ((AgentMedecin)myAgent).choisirPatient(Client.getPatient(ImageMainServer.baseURL() + "patients/"));
 		if(infosPatient==null)
 			return;
 		
@@ -63,23 +63,6 @@ public class AgentMedecinBhvExaminer extends CyclicBehaviour {
 			return;
 		}
 		System.out.println(myAgent.getLocalName() + " : le symptôme du patient est : " + resultatExamen.symptomeAsString() + " ; état de santé : " + resultatExamen.etatAsString());
-	}
-	
-	private HashMap<String, String> choisirPatient(HashMap<Integer, HashMap<String, String>> patients) {
-		int nbPatients = patients.size();
-		
-		if(nbPatients==0)
-			return null;
-		
-		Collection c = patients.values();
-		Iterator it = c.iterator();
-		int numPatientChoisi = (new Random()).nextInt(nbPatients);
-		
-		HashMap<String, String> ret=null;
-		for(int i=0 ; i < numPatientChoisi ; i++)
-			ret = (HashMap<String, String>) it.next();
-		
-		return ret;
 	}
 
 }

@@ -1,7 +1,12 @@
 package jadehospital;
 
+import java.util.HashMap;
+
+import org.codehaus.jackson.map.ObjectMapper;
+
 import jade.core.Agent;
 import jade.domain.DFService;
+import jade.lang.acl.ACLMessage;
 
 /**
  * 

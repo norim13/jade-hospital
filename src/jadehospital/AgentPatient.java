@@ -18,7 +18,7 @@ public class AgentPatient extends Agent {
 	
 	public void setup()
 	{
-		addBehaviour(new AgentPatientBhvEtreExamine());
+		addBehaviour(new AgentPatientBhvInteractionMedecin());
 		
 		etatSante = new EtatSante(symptomeEnum.MAUX_DE_TETE, 0);
 		
@@ -39,9 +39,6 @@ public class AgentPatient extends Agent {
 		send(msgAccueil);
 	}
 	
-	public EtatSante getEtatSante()
-	{
-		return etatSante;
-	}
+	public EtatSante getEtatSante()	{ return etatSante; }
 	
 }
