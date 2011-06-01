@@ -15,6 +15,7 @@ public class ImageMainServer {
 	
 	public static void main(String[] args) {
 		startServer();
+		System.out.println("test commit");
 		Client cl= new Client();
 		HashMap<Integer,HashMap<String,String> > a = cl.getPatient("http://localhost:8182/patients/john_smith");
 		//cl.addPatient("http://localhost:8182/patients/","jordan","lol","4");
