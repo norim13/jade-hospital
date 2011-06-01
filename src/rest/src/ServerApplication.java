@@ -1,6 +1,7 @@
 package rest.src;
 
 import java.net.URI;
+import java.util.logging.Level;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -16,6 +17,14 @@ import org.restlet.routing.Router;
 
 public class ServerApplication extends Application {
 
+//	public ServerApplication()
+//	{
+//		super();
+//		System.out.println("niveau log : " + getLogger().getLevel());
+//		this.getLogger().setLevel(Level.OFF);
+//		System.out.println("niveau log : " + getLogger().getLevel());
+//	}
+	
 	@Override
 	public Restlet createInboundRoot() {
 		Router router = new Router(getContext());

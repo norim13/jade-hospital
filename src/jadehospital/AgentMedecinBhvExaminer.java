@@ -63,6 +63,9 @@ public class AgentMedecinBhvExaminer extends CyclicBehaviour {
 			return;
 		}
 		System.out.println(myAgent.getLocalName() + " : le symptôme du patient est : " + resultatExamen.symptomeAsString() + " ; état de santé : " + resultatExamen.etatAsString());
+		
+		System.out.println("état de santé critique, je dois l'opérer !");
+		myAgent.addBehaviour(new AgentMedecinBhvOperer(patient));
 	}
 
 }

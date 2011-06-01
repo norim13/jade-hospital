@@ -8,13 +8,22 @@ import rest.src.Client;
 import rest.src.ImageMainServer;
 import jade.core.AID;
 import jade.core.behaviours.CyclicBehaviour;
+import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
 
-public class AgentMedecinBhvOperer extends CyclicBehaviour {
+public class AgentMedecinBhvOperer extends OneShotBehaviour {
 
+	AID patient;
+	
+	public AgentMedecinBhvOperer(AID patient)
+	{
+		this.patient = patient;
+	}
+	
 	@Override
 	public void action() {
 		
+		/*
 		//examiner le REST pour trouver le nom d'un patient à opérer
 		HashMap<String, String> infosPatient = ((AgentMedecin)myAgent).choisirPatient(Client.getPatient(ImageMainServer.baseURL() + "patients/"));
 		if(infosPatient==null)
@@ -24,6 +33,7 @@ public class AgentMedecinBhvOperer extends CyclicBehaviour {
 		
 		//chercher ce patient dans le DF
 		AID patient = Library.getFirstReceiverByName(infosPatient.get("nom"), myAgent);
+		*/
 		
 		//envoyer un message au patient lui indiquant qu'on l'opère
 		ACLMessage msgOperer= new ACLMessage(ACLMessage.REQUEST);

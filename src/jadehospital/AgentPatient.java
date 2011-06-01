@@ -20,7 +20,7 @@ public class AgentPatient extends Agent {
 	{
 		addBehaviour(new AgentPatientBhvInteractionMedecin());
 		
-		etatSante = new EtatSante(symptomeEnum.MAUX_DE_TETE, 0);
+		etatSante = new EtatSante();
 		
 		Library.registerInDF(Library.DF_AGENT_PATIENT_TYPE, this);
 		

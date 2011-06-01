@@ -1,5 +1,8 @@
 package rest.src;
 
+import jadehospital.LocalConfig;
+
+import java.io.FileWriter;
 import java.util.HashMap;
 
 import org.restlet.Component;
@@ -31,6 +34,15 @@ public class ImageMainServer {
 			component.getServers().add(Protocol.HTTP, 8182);
 			component.getDefaultHost().attach(new ServerApplication());
 			component.start(); // Start the component.
-		} catch(Exception ex) {}
+			
+			FileWriter fw = new FileWriter(LocalConfig.REST_DIRECTORY + "annuaire.xml");
+	        fw.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<annuaire>\n</annuaire>");
+	        fw.close();
+	        FileWriter fw2 = new FileWriter(LocalConfig.REST_DIRECTORY + "patients.xml");
+	        fw2.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<patients>\n</patients>");
+	        fw2.close();
+		} catch(Exception ex) {
+			System.out.println(ex.getStackTrace());
+		}
 	}
 }
