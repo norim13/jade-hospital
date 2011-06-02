@@ -41,18 +41,18 @@ public class AgentPatientBhvInteractionMedecin extends CyclicBehaviour {
 		{
 			System.out.println(myAgent.getLocalName() + " : je suis examiné");
 			
-			ACLMessage reponse = msg.createReply();
+			ACLMessage msgReponse = msg.createReply();
 			EtatSante etat = ((AgentPatient) myAgent).getEtatSante();
 			
 			ObjectMapper mapperReponse = new ObjectMapper();
 			try {
-				reponse.setContent(mapperReponse.writeValueAsString(etat));
+				msgReponse.setContent(mapperReponse.writeValueAsString(etat));
 			} catch (Exception e) {
 				e.printStackTrace();
 				return;
 			}
 			
-			myAgent.send(reponse);
+			myAgent.send(msgReponse);
 		}
 		else if(input.get("operation").equals("operer")) // le médecin veut m'opérer, je lui communique le résultat
 		{
@@ -62,10 +62,28 @@ public class AgentPatientBhvInteractionMedecin extends CyclicBehaviour {
 			int experienceMedecin = Integer.parseInt(input.get("experience"));
 			
 			int rouletteRusse = new Random().nextInt(100);
-			HashMap<String, String> resultat = new HashMap<String, String>();
-			resultat.put("resultat", (rouletteRusse < experienceMedecin ? "vivant" : "mort")); // TODO faire une gestion + fine : l'opération peut échouer sans que le patient meure
+			boolean gueri = (rouletteRusse < experienceMedecin);
 			
-			ACLMessage msgResultat = new ACLMessage(ACLMessage.INFORM);
+			if(gueri)
+				etat.setEtatMax();
+			else
+				etat.setEtatMin();
+			
+//			HashMap<String, String> resultat = new HashMap<String, String>();
+//			resultat.put("resultat", (rouletteRusse < experienceMedecin ? "vivant" : "mort")); // TODO faire une gestion + fine : l'opération peut échouer sans que le patient meure
+			
+			ACLMessage msgReponse = msg.createReply();
+			msgReponse.setPerformative(ACLMessage.INFORM);
+			
+			ObjectMapper mapperReponse = new ObjectMapper();
+			try {
+				msgReponse.setContent(mapperReponse.writeValueAsString(etat));
+			} catch (Exception e) {
+				e.printStackTrace();
+				return;
+			}
+			
+			myAgent.send(msgReponse);
 		}
 	}
 

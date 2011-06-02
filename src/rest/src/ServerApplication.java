@@ -1,7 +1,9 @@
 package rest.src;
 
 import java.net.URI;
+import java.util.logging.Handler;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -13,6 +15,7 @@ import org.apache.http.util.EntityUtils;
 import org.restlet.Application;
 import org.restlet.Restlet;
 import org.restlet.routing.Router;
+import org.slf4j.bridge.SLF4JBridgeHandler;
 
 
 public class ServerApplication extends Application {
@@ -35,4 +38,20 @@ public class ServerApplication extends Application {
 		return router;
 	}
 	
+//	static {
+//	    // Install logging bridge (JUL -> LOG4J)
+//	    SLF4JBridgeHandler.install();
+//
+//	    // Disable annoying console logging of requests..
+//	    Logger logger = Logger.getLogger("org.restlet");
+//	    for (Handler handler : logger.getParent().getHandlers()) {
+//	        // Find the console handler
+//	        if (handler.getClass().equals(java.util.logging.ConsoleHandler.class)) {
+//	            // set level to SEVERE. We could disable it completely with 
+//	            // a custom filter but this is good enough.
+//	            handler.setLevel(Level.SEVERE);
+//	        }
+//	    }
+//	}
+
 }
