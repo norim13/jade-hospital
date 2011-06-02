@@ -47,7 +47,7 @@ public class PatientId extends ServerResource {
 		String reponse = null;
 		if(s.equals("text/xml")){
 			//Parse le fichier XML
-			xml = new ParserXML(LocalConfig.REST_DIRECTORY + "test.xml");
+			xml = new ParserXML(LocalConfig.REST_DIRECTORY + "annuaire.xml");
 	
 		    //retourne les elements concernant l'id fournit dans l'URI
 		    if(Id == null){
@@ -109,7 +109,7 @@ public class PatientId extends ServerResource {
 		Etat=form.getValues("etat");
 		
 		//parsing du fichier XML concentant l'information sur les patients
-		xml = new ParserXML(LocalConfig.REST_DIRECTORY + "test.xml");
+		xml = new ParserXML(LocalConfig.REST_DIRECTORY + "annuaire.xml");
 
 		//retourne les elements concernant l'id fournit dans l'URI
 		boolean reponse = ajoutpersonne();
@@ -139,7 +139,7 @@ public class PatientId extends ServerResource {
 		racine.addContent(child);
 		
 		XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
-        sortie.output(document, new FileOutputStream(LocalConfig.REST_DIRECTORY + "test.xml"));
+        sortie.output(document, new FileOutputStream(LocalConfig.REST_DIRECTORY + "annuaire.xml"));
 		return true;
 	   }
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -152,7 +152,7 @@ public class PatientId extends ServerResource {
 		Symptome=form.getValues("symptome");
 		Etat=form.getValues("etat");
 		
-		xml = new ParserXML(LocalConfig.REST_DIRECTORY + "test.xml");
+		xml = new ParserXML(LocalConfig.REST_DIRECTORY + "annuaire.xml");
 		if(xml.getErreur().equals("notfound")){
 			getResponse().setStatus(Status.SERVER_ERROR_NOT_IMPLEMENTED);
 		}
@@ -191,7 +191,7 @@ public class PatientId extends ServerResource {
 		    	  
 		    	  //Creation du nouveau XML qui va remplacer l'ancien
 		    	  XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
-		          sortie.output(document, new FileOutputStream(LocalConfig.REST_DIRECTORY + "test.xml"));
+		          sortie.output(document, new FileOutputStream(LocalConfig.REST_DIRECTORY + "annuaire.xml"));
 		          return sortie.toString();
 		      }
 	   }
