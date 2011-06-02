@@ -22,6 +22,8 @@ public class Library {
 	
 	public static final String DF_AGENT_PATIENT_TYPE = "AgentPatient";
 	
+	public static final long UNITE_TEMPS = 100;
+	
 	
 	private static AgentContainer mainContainer = null;
 	

@@ -48,10 +48,10 @@ public class Client {
 
 				 SAXBuilder build = new SAXBuilder();
 			     Document document = build.build(new ByteArrayInputStream(s.getBytes()));
-			   //On cr�e une List contenant tous les noeuds "patient" de l'Element racine
+			   //On crée une List contenant tous les noeuds "patient" de l'Element racine
 				   List listEtudiants = document.getRootElement().getChildren("patient");
 
-				   //On cr�e un Iterator sur notre liste pour parcourir tous les patients
+				   //On crée un Iterator sur notre liste pour parcourir tous les patients
 				   Iterator i = listEtudiants.iterator();
 				   int j = 0;
 				   while(i.hasNext())
@@ -173,4 +173,27 @@ public class Client {
 	return s;		
 	}
 	
+	public static String getMedecin(String url) {
+		URI uri;
+		String s = null;
+		try {
+			uri = new URI(url);
+			HttpGet httpget = new HttpGet(uri);
+			httpget.addHeader("Accept", "text/xml");
+			HttpClient client = new DefaultHttpClient();
+			HttpResponse res = client.execute(httpget);
+			HttpEntity entity = res.getEntity();
+			if (res.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
+				s="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+				s += EntityUtils.toString(entity);
+				System.out.println(s);
+				return s;
+			}else{
+				System.out.println("erreur");
+				System.out.println(res.getStatusLine().getStatusCode());
+				return "Erreur " + res.getStatusLine().getStatusCode();
+			}
+		} catch (Exception e) {}
+		return s;
+	}
 }

@@ -37,7 +37,7 @@ public class PatientId extends ServerResource {
 		//Recupere les attibruts de la requete
 		Map<String,Object> attributes =getRequest().getAttributes();
 		
-		//Recupere l'ID du patient dont les informations sont demand�es
+		//Recupere l'ID du patient dont les informations sont demandées
 		Id = (String) attributes.get("id");
 
 		//Recupere le Header de la requete et verifie qu'elle type d'element
@@ -53,7 +53,7 @@ public class PatientId extends ServerResource {
 		    if(Id == null){
 		    	Element racine = xml.getRacine();
 				
-		 	   //On cr�e une List contenant tous les noeuds "patient" de l'Element racine
+		 	   //On crée une List contenant tous les noeuds "patient" de l'Element racine
 		 	   List listEtudiants = racine.getChildren("patient");
 		 	  
 			    	  XMLOutputter outputter = new XMLOutputter(); 
@@ -69,21 +69,21 @@ public class PatientId extends ServerResource {
 	    }
 	}
 	
-	//Ajouter cette m�thodes � la classe JDOM2
+	//Ajouter cette méthodes à la classe JDOM2
 	static String getElementForId() throws IOException
 	{
 		org.jdom.Document document = xml.getDocument();
 		Element racine = xml.getRacine();
 		
-	   //On cr�e une List contenant tous les noeuds "patient" de l'Element racine
+	   //On crée une List contenant tous les noeuds "patient" de l'Element racine
 	   List listEtudiants = racine.getChildren("patient");
 
-	   //On cr�e un Iterator sur notre liste pour parcourir tous les patients
+	   //On crée un Iterator sur notre liste pour parcourir tous les patients
 	   Iterator i = listEtudiants.iterator();
 	   while(i.hasNext())
 	   {
-	      //On recr�e l'Element courant � chaque tour de boucle afin de
-	      //pouvoir utiliser les m�thodes propres aux Element comme :
+	      //On recrée l'Element courant à chaque tour de boucle afin de
+	      //pouvoir utiliser les méthodes propres aux Element comme :
 	      //selectionner un noeud fils, modifier du texte, etc...
 	      Element courant = (Element)i.next();
 	      if(courant.getChild("nom").getText().equals(Id) ){
@@ -169,14 +169,14 @@ public class PatientId extends ServerResource {
 		org.jdom.Document document = xml.getDocument();
 		Element racine = xml.getRacine();
 		
-	   //On cr�e une List contenant tous les noeuds "medecin" de l'Element racine
+	   //On crée une List contenant tous les noeuds "medecin" de l'Element racine
 	   List listEtudiants = racine.getChildren("patient");
 
-	   //On cr�e un Iterator sur notre liste pour parcourir tous les patients
+	   //On crée un Iterator sur notre liste pour parcourir tous les patients
 	   Iterator i = listEtudiants.iterator();
 	   while(i.hasNext()){
-		 //On recr�e l'Element courant � chaque tour de boucle afin de
-		      //pouvoir utiliser les m�thodes propres aux Element comme :
+		 //On recrée l'Element courant à chaque tour de boucle afin de
+		      //pouvoir utiliser les méthodes propres aux Element comme :
 		      //selectionner un noeud fils, modifier du texte, etc...
 		      Element courant = (Element)i.next();
 		      if(courant.getChild("nom").getText().equals(Nom) ){

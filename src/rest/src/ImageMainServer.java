@@ -24,6 +24,10 @@ public class ImageMainServer {
 		//cl.changePatient("http://localhost:8182/patients/", "jordan", "mdr", "5");
 		//cl.changeInformation("http://localhost:8182/annuaire/siva");
 		//cl.addPersonne("http://localhost:8182/annuaire/");
+		//cl.getMedecin("http://localhost:8182/annuaire/zohair");
+		//cl.getMedecin("http://localhost:8182/annuaire/medecins");
+		cl.getMedecin("http://localhost:8182/annuaire/infirmier");
+
 	}
 	
 	public static void startServer() {
