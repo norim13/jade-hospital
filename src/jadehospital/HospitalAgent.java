@@ -16,18 +16,20 @@ import jade.lang.acl.ACLMessage;
  * n'existent plus
  *
  */
-public class HospitalAgent extends Agent {
-
-	 protected void takeDown() 
-     {
-        try
-        {
-        	DFService.deregister(this);
-        }
-        catch (Exception e)
-        {
-        	System.err.println("Erreur lors de la désinscription du DF :\n" + e.getMessage() + "\n\nStacktrace :\n" + e.getStackTrace());
-        }
-     }
+public abstract class HospitalAgent extends Agent {
+	
+	protected void takeDown() 
+	{
+		try {
+			DFService.deregister(this);
+		}
+		catch (Exception e) {
+			System.err.println("Erreur lors de la désinscription du DF :\n" + e.getMessage() + "\n\nStacktrace :\n" + e.getStackTrace());
+		}
+	}
+	
+	protected void println(String s) {
+		System.out.println(getLocalName() + " : " + s);
+	}
 	
 }

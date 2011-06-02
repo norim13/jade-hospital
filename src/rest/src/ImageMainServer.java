@@ -15,10 +15,9 @@ public class ImageMainServer {
 	private static String BASE_URL = "http://localhost:8182/";
 	
 	public static String baseURL() { return BASE_URL; }
-	
 	public static void main(String[] args) {
 		startServer();
-		System.out.println("test commit");
+//		System.getProperties().put("org.restlet.engine.loggerFacadeClass", "org.restlet.ext.slf4j.Slf4jLoggerFacade");
 		Client cl= new Client();
 		HashMap<Integer,HashMap<String,String> > a = cl.getPatient("http://localhost:8182/patients/john_smith");
 		//cl.addPatient("http://localhost:8182/patients/","jordan","lol","4");

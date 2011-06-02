@@ -16,13 +16,13 @@ public class EtatSante implements Serializable {
 	private static final long serialVersionUID = 1L;
 	public enum symptomeEnum{MAUX_DE_TETE, GRIPPE, APPENDICITE};
 	private int etat;
-	private int lower = 0;
-	private int higher = 10;
+	public static final int LOWER = 0;
+	public static final int HIGHER = 10;
 	private symptomeEnum symptome;
 	
 	public EtatSante(){
 		this.symptome=this.randomLetter();
-		this.etat=(int)(Math.random() * (higher-lower)) + lower;
+		this.etat=(int)(Math.random() * (HIGHER-LOWER)) + LOWER;
 	}
 	public EtatSante(symptomeEnum s,int e){
 		this.symptome=s;
@@ -39,6 +39,14 @@ public class EtatSante implements Serializable {
 
 	public void setEtat(int etat) {
 		this.etat = etat;
+	}
+	
+	public void setEtatMin() {
+		etat = LOWER;
+	}
+	
+	public void setEtatMax() {
+		etat = HIGHER;
 	}
 
 	public symptomeEnum getSymptome() {

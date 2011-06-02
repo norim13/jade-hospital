@@ -10,6 +10,7 @@ import jade.core.AID;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
+import jade.lang.acl.MessageTemplate;
 
 public class AgentMedecinBhvOperer extends OneShotBehaviour {
 
@@ -50,6 +51,45 @@ public class AgentMedecinBhvOperer extends OneShotBehaviour {
 		}
 		
 		myAgent.send(msgOperer);
+		
+		//recevoir la réponse
+		System.out.println(myAgent.getLocalName() + " : j'opère le patient...");
+		MessageTemplate mt = MessageTemplate.MatchSender(patient);
+		ACLMessage msgResultatExamen = myAgent.blockingReceive(mt);
+		
+//		ObjectMapper mapperResultatOperation = new ObjectMapper();
+//		HashMap<String,String> resultatOperation = null;
+//		try {
+//			resultatOperation = mapperResultatOperation.readValue(msgResultatExamen.getContent(), HashMap.class);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			return;
+//		}
+//		
+//		String etat = resultatOperation.get("resultat");
+//		if(etat.equals("vivant"))
+//			((HospitalAgent)myAgent).println("Le patient est soigné !");
+//		else if(etat.equals("mort"))
+//		{
+//			((HospitalAgent)myAgent).println("Uh-oh, j'ai tué le patient...");
+//		}	
+		
+		ObjectMapper mapperResultatOperation = new ObjectMapper();
+		EtatSante resultatOperation = null;
+		try {
+			resultatOperation = mapperResultatOperation.readValue(msgResultatExamen.getContent(), EtatSante.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return;
+		}
+		
+		int nouvelEtat = resultatOperation.getEtat();
+		if(nouvelEtat == EtatSante.HIGHER)
+			((HospitalAgent)myAgent).println("Le patient est soigné !");
+		else if(nouvelEtat == EtatSante.LOWER)
+		{
+			((HospitalAgent)myAgent).println("Uh-oh, j'ai tué le patient...");
+		}
 	}
 
 }
