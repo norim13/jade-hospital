@@ -90,6 +90,9 @@ public class AgentMedecinBhvOperer extends OneShotBehaviour {
 		{
 			((HospitalAgent)myAgent).println("Uh-oh, j'ai tué le patient...");
 		}
+		
+		// dans les 2 cas (qu'il soit soigné = sorti de l'hôpital, ou mort) on le retire du REST
+		
 	}
 
 }

@@ -37,28 +37,22 @@ public class AgentPatientBhvInteractionMedecin extends CyclicBehaviour {
 			return;
 		}
 		
-		if(input.get("operation").equals("examiner")) // le médecin veut m'examiner, je lui communique mes symptômes
+		EtatSante etat = ((AgentPatient) myAgent).getEtatSante(); //état de santé à communiquer au médecin
+		ACLMessage msgReponse = msg.createReply();
+		msgReponse.setPerformative(ACLMessage.INFORM);
+		
+		if(input.get("operation").equals("examiner"))
 		{
 			System.out.println(myAgent.getLocalName() + " : je suis examiné");
+			etat = ((AgentPatient) myAgent).getEtatSante();
 			
-			ACLMessage msgReponse = msg.createReply();
-			EtatSante etat = ((AgentPatient) myAgent).getEtatSante();
-			
-			ObjectMapper mapperReponse = new ObjectMapper();
-			try {
-				msgReponse.setContent(mapperReponse.writeValueAsString(etat));
-			} catch (Exception e) {
-				e.printStackTrace();
-				return;
-			}
-			
-			myAgent.send(msgReponse);
+			((HospitalAgent) myAgent).sleep(30);
 		}
-		else if(input.get("operation").equals("operer")) // le médecin veut m'opérer, je lui communique le résultat
+		else if(input.get("operation").equals("operer"))
 		{
 			System.out.println(myAgent.getLocalName() + " : je suis opéré, priez pour moi...");
 			
-			EtatSante etat = ((AgentPatient) myAgent).getEtatSante(); // TODO utiliser l'état de santé pour gérer différents types d'opérations
+			// TODO utiliser l'état de santé pour gérer différents types d'opérations
 			int experienceMedecin = Integer.parseInt(input.get("experience"));
 			
 			int rouletteRusse = new Random().nextInt(100);
@@ -67,24 +61,21 @@ public class AgentPatientBhvInteractionMedecin extends CyclicBehaviour {
 			if(gueri)
 				etat.setEtatMax();
 			else
-				etat.setEtatMin();
+				etat.setEtatMin(); // TODO faire une gestion + fine : l'opération peut échouer sans que le patient meure
 			
-//			HashMap<String, String> resultat = new HashMap<String, String>();
-//			resultat.put("resultat", (rouletteRusse < experienceMedecin ? "vivant" : "mort")); // TODO faire une gestion + fine : l'opération peut échouer sans que le patient meure
-			
-			ACLMessage msgReponse = msg.createReply();
-			msgReponse.setPerformative(ACLMessage.INFORM);
-			
-			ObjectMapper mapperReponse = new ObjectMapper();
-			try {
-				msgReponse.setContent(mapperReponse.writeValueAsString(etat));
-			} catch (Exception e) {
-				e.printStackTrace();
-				return;
-			}
-			
-			myAgent.send(msgReponse);
+			((HospitalAgent) myAgent).sleep(50);
 		}
+		
+		// qu'on ait été examiné ou opéré, on communique le (nouvel) état de santé au médecin
+		ObjectMapper mapperReponse = new ObjectMapper();
+		try {
+			msgReponse.setContent(mapperReponse.writeValueAsString(etat));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return;
+		}
+		
+		myAgent.send(msgReponse);
 	}
 
 }

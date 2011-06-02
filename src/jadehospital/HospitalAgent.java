@@ -32,4 +32,12 @@ public abstract class HospitalAgent extends Agent {
 		System.out.println(getLocalName() + " : " + s);
 	}
 	
+	protected void sleep(long nbPeriodes) {
+		try {
+			Thread.sleep(Library.UNITE_TEMPS * nbPeriodes);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	
 }

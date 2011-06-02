@@ -11,7 +11,7 @@ import jade.core.Agent;
 import jade.lang.acl.ACLMessage;
 import jadehospital.EtatSante.symptomeEnum;
 
-public class AgentPatient extends Agent {
+public class AgentPatient extends HospitalAgent {
 
 	public static int nbPatients = 0;
 	private EtatSante etatSante;

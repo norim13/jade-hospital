@@ -39,10 +39,26 @@ public class Annuaire extends ServerResource {
 		nomDemande = (String) attributes.get("nom");
 		
 		xml = new ParserXML(LocalConfig.REST_DIRECTORY + "annuaire.xml");
-
+		
+		
+		
 		//retourne les elements concernant l'id fournit dans l'URI
-		String reponse = getInfos();
-	    if(!reponse.equals("")){
+		String reponse = "";
+		if(nomDemande.equals("medecins")){
+			List listMedecins = xml.getRacine().getChildren("medecin");
+			XMLOutputter outputter = new XMLOutputter(); 
+	    	reponse = outputter.outputString(listMedecins);
+		}else{
+			if(nomDemande.equals("infirmier")){
+				List listMedecins = xml.getRacine().getChildren("infirmier");
+				XMLOutputter outputter = new XMLOutputter(); 
+		    	reponse = outputter.outputString(listMedecins);
+			}else{
+				reponse = getInfos();
+			}
+		}
+		
+		if(!reponse.equals("")){
 	    	getResponse().setEntity(new StringRepresentation(reponse,MediaType.APPLICATION_ALL_XML));
 	    	getResponse().setStatus(Status.SUCCESS_OK);
 	    }else{
@@ -54,14 +70,15 @@ public class Annuaire extends ServerResource {
 		org.jdom.Document document = xml.getDocument();
 		Element racine = xml.getRacine();
 		
-	   //On cr�e une List contenant tous les noeuds "patient" de l'Element racine
-	   List listEtudiants = racine.getChildren("medecin");
+	   //On crée une List contenant tous les noeuds "patient" de l'Element racine
+	   List listMedecins = racine.getChildren("medecin");
+	   List listInfirmier = racine.getChildren("infirmier");
 
-	   //On cr�e un Iterator sur notre liste pour parcourir tous les patients
-	   Iterator i = listEtudiants.iterator();
+	   //On crée un Iterator sur notre liste pour parcourir tous les patients
+	   Iterator i = listMedecins.iterator();
 	   while(i.hasNext()){
-		 //On recr�e l'Element courant � chaque tour de boucle afin de
-		      //pouvoir utiliser les m�thodes propres aux Element comme :
+		   //On recrée l'Element courant à chaque tour de boucle afin de
+		      //pouvoir utiliser les méthodes propres aux Element comme :
 		      //selectionner un noeud fils, modifier du texte, etc...
 		      Element courant = (Element)i.next();
 		      if(courant.getChild("nom").getText().equals(nomDemande) ){
@@ -111,14 +128,14 @@ public class Annuaire extends ServerResource {
 		org.jdom.Document document = xml.getDocument();
 		Element racine = xml.getRacine();
 		
-	   //On cr�e une List contenant tous les noeuds "medecin" de l'Element racine
+	   //On crée une List contenant tous les noeuds "medecin" de l'Element racine
 	   List listEtudiants = racine.getChildren("medecin");
 
-	   //On cr�e un Iterator sur notre liste pour parcourir tous les patients
+	   //On crée un Iterator sur notre liste pour parcourir tous les patients
 	   Iterator i = listEtudiants.iterator();
 	   while(i.hasNext()){
-		 //On recr�e l'Element courant � chaque tour de boucle afin de
-		      //pouvoir utiliser les m�thodes propres aux Element comme :
+		 //On recrée l'Element courant à chaque tour de boucle afin de
+		      //pouvoir utiliser les méthodes propres aux Element comme :
 		      //selectionner un noeud fils, modifier du texte, etc...
 		      Element courant = (Element)i.next();
 		      if(courant.getChild("nom").getText().equals(nomDemande) ){
