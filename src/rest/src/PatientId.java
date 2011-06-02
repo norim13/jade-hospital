@@ -18,6 +18,7 @@ import org.restlet.data.MediaType;
 import org.restlet.data.Status;
 import org.restlet.representation.Representation;
 import org.restlet.representation.StringRepresentation;
+import org.restlet.resource.Delete;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 import org.restlet.resource.Put;
@@ -29,11 +30,10 @@ public class PatientId extends ServerResource {
 	//private HashMap<String,String> docs;
 	private static String Id="";
 	private static ParserXML xml;
-	private String Nom="",Symptome="",Etat="";
+	private String Nom="",Symptome="",Etat="",Infirmier="";
 	
 	@Get
 	public void retrieve() throws FileNotFoundException, SAXException, IOException, JDOMException {
-		
 		//Recupere les attibruts de la requete
 		Map<String,Object> attributes =getRequest().getAttributes();
 		
@@ -55,9 +55,8 @@ public class PatientId extends ServerResource {
 				
 		 	   //On crée une List contenant tous les noeuds "patient" de l'Element racine
 		 	   List listEtudiants = racine.getChildren("patient");
-		 	  
-			    	  XMLOutputter outputter = new XMLOutputter(); 
-			    	   reponse = outputter.outputString(listEtudiants);
+		 	   XMLOutputter outputter = new XMLOutputter(); 
+			   reponse = outputter.outputString(listEtudiants);
 		    }else{
 		    	reponse = getElementForId();
 		    }
@@ -132,14 +131,19 @@ public class PatientId extends ServerResource {
 		Element etat = new Element("etat");
 		etat.addContent(Etat);
 		
+		Element infirmier = new Element("infirmier");
+		infirmier.addContent("non");
+		
 		child.addContent(nom);
 		child.addContent(symptome);
 		child.addContent(etat);
+		child.addContent(infirmier);
+		
 		Element racine = xml.getRacine();
 		racine.addContent(child);
 		
 		XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
-        sortie.output(document, new FileOutputStream(LocalConfig.REST_DIRECTORY + "annuaire.xml"));
+        sortie.output(document, new FileOutputStream(LocalConfig.REST_DIRECTORY + "patients.xml"));
 		return true;
 	   }
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -151,8 +155,9 @@ public class PatientId extends ServerResource {
 		Nom = form.getValues("nom");
 		Symptome=form.getValues("symptome");
 		Etat=form.getValues("etat");
+		Infirmier=form.getValues("infirmier");
 		
-		xml = new ParserXML(LocalConfig.REST_DIRECTORY + "annuaire.xml");
+		xml = new ParserXML(LocalConfig.REST_DIRECTORY + "patients.xml");
 		if(xml.getErreur().equals("notfound")){
 			getResponse().setStatus(Status.SERVER_ERROR_NOT_IMPLEMENTED);
 		}
@@ -188,18 +193,51 @@ public class PatientId extends ServerResource {
 		    		  courant.getChild("symptome").setText(Symptome);
 		    	  if(!Etat.equals(""))
 		    		  courant.getChild("etat").setText(Etat);
-		    	  
+		    	  if(!Infirmier.equals("") &&(Infirmier.equals("oui") || Infirmier.equals("non")))
+		    		  courant.getChild("infirmier").setText(Infirmier);
 		    	  //Creation du nouveau XML qui va remplacer l'ancien
 		    	  XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
-		          sortie.output(document, new FileOutputStream(LocalConfig.REST_DIRECTORY + "annuaire.xml"));
+		          sortie.output(document, new FileOutputStream(LocalConfig.REST_DIRECTORY + "patients.xml"));
 		          return sortie.toString();
 		      }
 	   }
 	   return "";
 	}
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-
+	@Delete
+	public void removeItem() throws JDOMException, IOException{
+		Representation result = null; 
+		Map<String,Object> attributes =getRequest().getAttributes();
+		Form form = (Form) attributes.get("org.restlet.http.headers");
+		String nomSupprime=form.getValues("nom");
+		xml = new ParserXML(LocalConfig.REST_DIRECTORY + "patients.xml");
+		org.jdom.Document document = xml.getDocument();
+		Element racine = xml.getRacine();
+		
+	   //On crée une List contenant tous les noeuds "medecin" de l'Element racine
+	   List listEtudiants = racine.getChildren("patient");
+	   //On crée un Iterator sur notre liste pour parcourir tous les patients
+	   Iterator i = listEtudiants.iterator();
+	   while(i.hasNext()){
+		   Element courant = (Element)i.next();
+		   
+		   if(courant.getChild("nom").getText().equals(nomSupprime)){
+			   courant.detach();
+			   XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
+		       try {
+				sortie.output(document, new FileOutputStream(LocalConfig.REST_DIRECTORY + "patients.xml"));
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			setStatus(Status.SUCCESS_NO_CONTENT);
+		   }
+	   }
+	}
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	private void error() {
 		getResponse().setEntity(new StringRepresentation("{\"status\" : \"Parameter Error\"}",MediaType.TEXT_PLAIN));
 		getResponse().setStatus(Status.CLIENT_ERROR_BAD_REQUEST);

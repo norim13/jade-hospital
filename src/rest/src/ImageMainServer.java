@@ -19,14 +19,20 @@ public class ImageMainServer {
 		startServer();
 //		System.getProperties().put("org.restlet.engine.loggerFacadeClass", "org.restlet.ext.slf4j.Slf4jLoggerFacade");
 		Client cl= new Client();
-		HashMap<Integer,HashMap<String,String> > a = cl.getPatient("http://localhost:8182/patients/john_smith");
+		//HashMap<Integer,HashMap<String,String> > a = cl.getPatient("http://localhost:8182/patients/john_smith");
 		//cl.addPatient("http://localhost:8182/patients/","jordan","lol","4");
-		//cl.changePatient("http://localhost:8182/patients/", "jordan", "mdr", "5");
+		//cl.changePatient("http://localhost:8182/patients/", "jordan", "", "","oui");
+		//cl.deletePatient("http://localhost:8182/patients/", "jordan");
+		//cl.addPatient("http://localhost:8182/patients/","pierre","hihi","4");
+		//cl.getPatient("http://localhost:8182/patients/");
 		//cl.changeInformation("http://localhost:8182/annuaire/siva");
-		//cl.addPersonne("http://localhost:8182/annuaire/");
+		//HashMap<Integer,HashMap<String,String> > a = cl.getPatient("http://localhost:8182/patients/");
+		cl.addMedecin("http://localhost:8182/annuaire/medecin","jordan","ortho");
+		cl.addInfirmier("http://localhost:8182/annuaire/infirmier", "siva");
+		
 		//cl.getMedecin("http://localhost:8182/annuaire/zohair");
-		//cl.getMedecin("http://localhost:8182/annuaire/medecins");
-		cl.getMedecin("http://localhost:8182/annuaire/infirmier");
+		System.out.println(cl.getPersonnel("http://localhost:8182/annuaire/medecins"));
+		System.out.println(cl.getPersonnel("http://localhost:8182/annuaire/infirmier"));
 
 	}
 	

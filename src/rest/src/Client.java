@@ -10,6 +10,7 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
@@ -72,7 +73,7 @@ public class Client {
 	}
 	
 
-	public static String addPatient(String url, String nom, String symptome,String etat){
+	public static boolean addPatient(String url, String nom, String symptome,String etat){
 		URI uri;
 		String s = null;
 		try {
@@ -87,15 +88,13 @@ public class Client {
 			HttpResponse res = client.execute(httpput);
 			HttpEntity entity = res.getEntity();
 			if (res.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
-				s="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-				s += EntityUtils.toString(entity);
-				System.out.println(s);
+				return true;
 			}
 		} catch (Exception e) {}
-	return s;
+	return false;
 	}
 	
-	public static boolean changePatient(String url,String nom,String symptome,String etat) {
+	public static boolean changePatient(String url,String nom,String symptome,String etat,String inf) {
 		URI uri;
 		String s = null;
 		try {
@@ -105,6 +104,7 @@ public class Client {
 			httppost.addHeader("nom", nom);
 			httppost.addHeader("symptome", symptome);
 			httppost.addHeader("etat", etat);
+			httppost.addHeader("infirmier",inf);
 
 			HttpClient client = new DefaultHttpClient();
 			HttpResponse res = client.execute(httppost);
@@ -116,6 +116,27 @@ public class Client {
 		} catch (Exception e) {}
 	return false;	
 	}
+	
+	public static boolean deletePatient(String url,String nom){
+		URI uri;
+		String s = null;
+		try{
+			uri = new URI(url);
+			HttpDelete httpdelete = new HttpDelete(uri);
+			httpdelete.addHeader("Accept", "text/xml");
+			httpdelete.addHeader("nom", nom);
+			
+			HttpClient client = new DefaultHttpClient();
+			HttpResponse res = client.execute(httpdelete);
+			HttpEntity entity = res.getEntity();
+			if (res.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
+				return true;
+			}
+		}catch (Exception e) {}
+		return false;
+	}
+	
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////:::::
 
 	
@@ -146,23 +167,21 @@ public class Client {
 	return s;
 	}
 
+	public static String addInfirmier(String url,String nom){
+		return addMedecin(url,nom,"");
+	}
 	
-	public static String addPersonne(String url) {
+	public static String addMedecin(String url, String nom,String specialite){
 		URI uri;
 		String s = null;
 		try {
 			uri = new URI(url);
-			HttpPost httppost = new HttpPost(uri);
-			httppost.addHeader("Accept", "text/xml");
-			httppost.addHeader("nom", "jordan");
-			httppost.addHeader("portable", "0698767876");
-			httppost.addHeader("bureau", "3456");
-			httppost.addHeader("specialite", "orthopediste");
-			httppost.addHeader("present", "oui");
-			httppost.addHeader("arrivee", "12/05/2011_13h30");
-			httppost.addHeader("garde", "non");
+			HttpPut httpput = new HttpPut(uri);
+			httpput.addHeader("Accept", "text/xml");
+			httpput.addHeader("nom", nom);
+			httpput.addHeader("specialite", specialite);
 			HttpClient client = new DefaultHttpClient();
-			HttpResponse res = client.execute(httppost);
+			HttpResponse res = client.execute(httpput);
 			HttpEntity entity = res.getEntity();
 			if (res.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
 				s="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
@@ -171,9 +190,9 @@ public class Client {
 			}
 		} catch (Exception e) {}
 	return s;		
-	}
+	}	
 	
-	public static String getMedecin(String url) {
+	public static String getPersonnel(String url) {
 		URI uri;
 		String s = null;
 		try {
@@ -184,16 +203,18 @@ public class Client {
 			HttpResponse res = client.execute(httpget);
 			HttpEntity entity = res.getEntity();
 			if (res.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
-				s="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-				s += EntityUtils.toString(entity);
-				System.out.println(s);
-				return s;
+				//s="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+				s = EntityUtils.toString(entity);
+				return s;				
+				//System.out.println(s);
+				//return s;
 			}else{
 				System.out.println("erreur");
 				System.out.println(res.getStatusLine().getStatusCode());
-				return "Erreur " + res.getStatusLine().getStatusCode();
+				return "-1";
+				//return "Erreur " + res.getStatusLine().getStatusCode();
 			}
 		} catch (Exception e) {}
-		return s;
+		return "-1";
 	}
 }

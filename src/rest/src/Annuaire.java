@@ -46,13 +46,11 @@ public class Annuaire extends ServerResource {
 		String reponse = "";
 		if(nomDemande.equals("medecins")){
 			List listMedecins = xml.getRacine().getChildren("medecin");
-			XMLOutputter outputter = new XMLOutputter(); 
-	    	reponse = outputter.outputString(listMedecins);
+			reponse = Integer.toString(listMedecins.size());		
 		}else{
 			if(nomDemande.equals("infirmier")){
-				List listMedecins = xml.getRacine().getChildren("infirmier");
-				XMLOutputter outputter = new XMLOutputter(); 
-		    	reponse = outputter.outputString(listMedecins);
+				List listInfirmier = xml.getRacine().getChildren("infirmier");
+		    	reponse = Integer.toString(listInfirmier.size());
 			}else{
 				reponse = getInfos();
 			}
@@ -98,20 +96,15 @@ public class Annuaire extends ServerResource {
 	/*                                                           PUT                                                            */
 	/****************************************************************************************************************************/  
 	
-	@Put
-	public void insert() throws JDOMException, IOException{
+	@Post
+	public void update(Representation entity) throws JDOMException, IOException{
 		Map<String,Object> attributes =getRequest().getAttributes();
 		nomDemande = (String) attributes.get("nom");
 		Form form = (Form) attributes.get("org.restlet.http.headers");
 		newNom = form.getValues("nom");
-		newPortable=form.getValues("portable");
-		newBureau=form.getValues("bureau");
 		newSpecialite=form.getValues("specialite");
-		newArrivee=form.getValues("arrivee");
-		newPresent=form.getValues("present");
-		newGarde=form.getValues("garde");
-		
-		xml = new ParserXML(LocalConfig.REST_DIRECTORY + "annuaire.xml");
+
+		xml = new ParserXML("src/annuaire.xml");
 		if(xml.getErreur().equals("notfound")){
 			getResponse().setStatus(Status.SERVER_ERROR_NOT_IMPLEMENTED);
 		}
@@ -144,18 +137,9 @@ public class Annuaire extends ServerResource {
 		    	  System.out.println("ooooooooooo");
 		    	  if(!newNom.equals(""))
 		    		  courant.getChild("nom").setText(newNom);
-		    	  if(!newPortable.equals(""))
-		    		  courant.getChild("portable").setText(newPortable);
-		    	  if(!newBureau.equals(""))
-		    		  courant.getChild("bureau").setText(newBureau);
 		    	  if(!newSpecialite.equals(""))
 		    		  courant.getChild("specialite").setText(newSpecialite);
-		    	  if(!newArrivee.equals(""))
-		    		  courant.getChild("arrivee").setText(newArrivee);
-		    	  if(!newPresent.equals(""))
-		    		  courant.getChild("present").setText(newPresent);
-		    	  if(!newGarde.equals(""))
-		    		  courant.getChild("garde").setText(newGarde);
+		    	  
 		    	  XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
 		          sortie.output(document, new FileOutputStream(LocalConfig.REST_DIRECTORY + "annuaire.xml"));
 		          return sortie.toString();
@@ -167,26 +151,28 @@ public class Annuaire extends ServerResource {
 	/****************************************************************************************************************************/
 	/****************************************************************************************************************************/
 	/****************************************************************************************************************************/
-	/*                                                           POST                                                           */
+	/*                                                           Put                                                           */
 	/****************************************************************************************************************************/  
 	 
-	@Post
-	public void update(Representation entity) throws JDOMException, IOException {
+	@Put
+	public void insert() throws JDOMException, IOException {
 		Map<String,Object> attributes =getRequest().getAttributes();
 		nomDemande = (String) attributes.get("nom");
 		Form form = (Form) attributes.get("org.restlet.http.headers");
-		newNom = form.getValues("nom");
-		newPortable=form.getValues("portable");
-		newBureau=form.getValues("bureau");
-		newSpecialite=form.getValues("specialite");
-		newArrivee=form.getValues("arrivee");
-		newPresent=form.getValues("present");
-		newGarde=form.getValues("garde");
+		boolean reponse;
+		if(nomDemande.equals("medecin")){
+			newNom = form.getValues("nom");
+			newSpecialite=form.getValues("specialite");
+		}else{
+			if(nomDemande.equals("infirmier")){
+				newNom = form.getValues("nom");
+			}
+		}
 		
 		xml = new ParserXML(LocalConfig.REST_DIRECTORY + "annuaire.xml");
-
+		
 		//retourne les elements concernant l'id fournit dans l'URI
-		boolean reponse = ajoutpersonne();
+		reponse = ajoutpersonne();
 	    /*if(!reponse.equals("")){
 	    	getResponse().setEntity(new StringRepresentation(reponse,MediaType.APPLICATION_ALL_XML));
 	    	getResponse().setStatus(Status.SUCCESS_OK);
@@ -194,36 +180,30 @@ public class Annuaire extends ServerResource {
 	}
 
 	private boolean ajoutpersonne() throws FileNotFoundException, IOException {
+		
 		org.jdom.Document document = xml.getDocument();
-		Element child = new Element("medecin");
-		
-		Element nom = new Element("nom");
-		nom.addContent(newNom);
-		
-		Element portable = new Element("portable");
-		portable.addContent(newPortable);
-		
-		Element bureau = new Element("bureau");
-		bureau.addContent(newBureau);
+		Element child ;
+		if(nomDemande.equals("medecin")){
+			child = new Element("medecin");
+			
+			Element nom = new Element("nom");
+			nom.addContent(newNom);
+					
+			Element specialite = new Element("specialite");
+			specialite.addContent(newSpecialite);
+			
 
-		Element specialite = new Element("specialite");
-		specialite.addContent(newSpecialite);
-		
-		Element arrivee = new Element("arrivee");
-		arrivee.addContent(newArrivee);
-		
-		Element present = new Element("present");
-		present.addContent(newPresent);
-		
-		Element garde = new Element("garde");
-		garde.addContent(newGarde);
+			child.addContent(nom);
+			child.addContent(specialite);
+		}else{
+			child = new Element("infirmier");
+			
+			Element nom = new Element("nom");
+			nom.addContent(newNom);	
 
-		child.addContent(nom);
-		child.addContent(bureau);
-		child.addContent(specialite);
-		child.addContent(arrivee);
-		child.addContent(present);
-		child.addContent(garde);
+			child.addContent(nom);
+		}
+
 		Element racine = xml.getRacine();
 		racine.addContent(child);
 		
