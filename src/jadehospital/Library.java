@@ -12,20 +12,34 @@ import jade.wrapper.AgentContainer;
 
 public class Library {
 	
-	public static final String DF_ACCUEIL_TYPE = "hopital";
-	public static final String DF_ACCUEIL_NAME = "accueil";
+	//Effectif requis minimum pour le bon fonctionnement de l'hopital
+	public static final int NB_MAX_MEDECINS = 5;
+	public static final int NB_MAX_INFIRMIERES= 5;
 	
-	public static final String DF_AGENT_GENERATEUR_PATIENT_TYPE="hopital";
-	public static final String DF_AGENT_GENERATEUR_PATIENT_NAME="gentGenerateurPatient";
+	public static final String DF_ACCUEIL_TYPE = "type_Accueil";
+	public static final String DF_ACCUEIL_NAME = "Accueil";
 	
-	public static final String DF_AGENT_MEDECIN_TYPE = "AgentMedecin";
+	public static final String DF_AGENT_GENERATEUR_PATIENT_TYPE="type_AgentGenerateurPatient";
+	public static final String DF_AGENT_GENERATEUR_PATIENT_NAME="AgentGenerateurPatient";
 	
-	public static final String DF_AGENT_PATIENT_TYPE = "AgentPatient";
+	public static final String DF_AGENT_MEDECIN_TYPE = "type_AgentMedecin";
+	public static final String DF_AGENT_MEDECIN_NAME = "AgentMedecin";
+	
+	public static final String DF_AGENT_PATIENT_TYPE = "type_AgentPatient";
+	public static final String DF_AGENT_PATIENT_NAME = "AgentPatient";
+	
+	public static final String DF_AGENT_INFIRMIERE_TYPE = "type_AgentInfirmiere";
+	public static final String DF_AGENT_INFIRMIERE_NAME = "AgentInfirmire";
+	
+	public static final String DF_AGENT_DRH_TYPE = "type_DRH";
+	public static final String DF_AGENT_DRH_NAME = "AgentDRH";	
+	
+	public static final String DF_AGENT_DIRECTEUR_TYPE = "type_Directeur";
+	public static final String DF_AGENT_DIRECTEUR_NAME = "AgentDirecteur";
 	
 	public static final String DF_AGENT_REST_TYPE = "AgentRest";
 	
 	public static final long UNITE_TEMPS = 100;
-	
 	private static AgentContainer mainContainer = null;
 	
 	
