@@ -22,10 +22,12 @@ public class Library {
 	
 	public static final String DF_AGENT_PATIENT_TYPE = "AgentPatient";
 	
+	public static final String DF_AGENT_REST_TYPE = "AgentRest";
+	
 	public static final long UNITE_TEMPS = 100;
 	
-	
 	private static AgentContainer mainContainer = null;
+	
 	
 	/**
 	 * Retourne le conteneur principal défini avec setMainContainer()
@@ -36,6 +38,7 @@ public class Library {
 		return mainContainer;
 	}
 	
+	
 	/**
 	 * Enregistre la référence sur le conteneur principal des agents
 	 * Ceci permet d'y accéder depuis tous les agents qui en ont besoin pour instancier d'autres agents
@@ -45,6 +48,7 @@ public class Library {
 	{
 		mainContainer = mc;
 	}
+	
 	
 	/**
 	 * Renvoie la liste des agents remplissant la fonction demandée, d'après une recherche dans le DF
@@ -82,13 +86,14 @@ public class Library {
 		return receivers;
 	}
 	
+	
 	/**
-	 * Renvoie le premier agent remplissant la fonction demandée
+	 * Renvoie le premier agent qui a les type et nom demandés 
 	 * 
 	 * @param type : champ "type" dans la description de l'agent
 	 * @param name : champ "name" dans la description de l'agent
 	 * @param a : référence sur l'agent qui demande la recherche
-	 * @return
+	 * @return AID du premier agent trouvé
 	 */
 	public static AID getFirstReceiver(String type, String name, Agent a)
 	{
@@ -100,15 +105,32 @@ public class Library {
 		return receivers.get(0);
 	}
 	
+	
+	/**
+	 * Renvoie le premier agent qui a le type demandé
+	 * 
+	 * @param type : champ "type" dans la description de l'agent
+	 * @param a : référence sur l'agent qui demande la recherche
+	 * @return AID du premier agent trouvé
+	 */
 	public static AID getFirstReceiverByType(String type, Agent a)
 	{
 		return getFirstReceiver(type, "", a);
 	}
 	
+	
+	/**
+	 * Renvoie le premier agent qui a le nom demandé
+	 * 
+	 * @param name : champ "name" dans la description de l'agent
+	 * @param a : référence sur l'agent qui demande la recherche
+	 * @return AID du premier agent trouvé
+	 */
 	public static AID getFirstReceiverByName(String name, Agent a)
 	{
 		return getFirstReceiver("", name, a);
 	}
+	
 	
 	/**
 	 * Effectue l'inscription d'un agent auprès du DF
