@@ -15,7 +15,7 @@ import jade.wrapper.StaleProxyException;
 
 
 
-public class main {
+public class Main {
 
 	/**
 	 * @param args
@@ -46,13 +46,16 @@ public class main {
 		Library.setMainContainer(mc);
 		ImageMainServer.startServer();
 		try{
-			AgentController agentGenerateurPatient = mc.createNewAgent("AgentGenerateurPatient", "jadehospital.AgentGenerateurPatient" ,null );
-			AgentController agentAccueil=mc.createNewAgent("Accueil","jadehospital.Accueil",null);
-			AgentController agentMedecin = mc.createNewAgent("Medecin", "jadehospital.AgentMedecin", null);
+			AgentController agentGenerateurPatient = mc.createNewAgent("AgentGenerateurPatient", "jadehospital.generateurPatient.AgentGenerateurPatient" ,null );
+			AgentController agentAccueil=mc.createNewAgent("Accueil","jadehospital.accueil.Accueil",null);
+			
+			AgentController agentDRH=mc.createNewAgent("DRH", "jadehospital.drh.AgentDRH", null);
+			AgentController agentDirecteur=mc.createNewAgent("Directeur","jadehospital.directeur.AgentDirecteur", null);
 			
 			agentGenerateurPatient.start();
 			agentAccueil.start();
-			agentMedecin.start();
+			agentDRH.start();
+			agentDirecteur.start();
 			
 		}catch(Exception e){System.out.println("#####\n" + e.getStackTrace() + "\n" + e.getMessage() + "\n#####\n");}
 		
