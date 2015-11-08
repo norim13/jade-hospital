@@ -1,0 +1,19 @@
+# Introduction #
+
+Pour s'enregistrer auprès du DF, un agent doit suivre la procédure suivante dans sa méthode setup()
+
+
+# Details #
+
+DFAgentDescription dfd = new DFAgentDescription();
+dfd.setName(getAID());
+ServiceDescription sd = new ServiceDescription();
+sd.setType("Ontologie");
+sd.setName("KBAgent");
+dfd.addServices(sd);
+
+try {
+> DFService.register(this, dfd);
+} catch (FIPAException e) {
+> e.printStackTrace();
+}
